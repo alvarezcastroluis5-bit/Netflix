@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Panel Administrativo</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-portal="staff">
+  <section id="loginView" class="login-page">
+    <div class="login-card">
+      <div class="login-visual">
+        <div class="screen-glow">
+          <div class="netflix-word">NETFLIX</div>
+        </div>
+      </div>
+      <form id="loginForm" class="login-form">
+        <div class="mini-brand"><span>SD</span> PANEL</div>
+        <h1>¡Bienvenido!</h1>
+        <p>Acceso para administración y soporte.</p>
+        <label>
+          <span>Correo electrónico</span>
+          <input id="loginEmail" type="email" autocomplete="email" required>
+        </label>
+        <label>
+          <span>Contraseña</span>
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
+        </label>
+        <label class="remember"><input id="rememberSession" type="checkbox"> Recuérdame</label>
+        <button class="btn primary" type="submit">Ingresar</button>
+        <div id="loginError" class="form-error" hidden></div>
+        <a class="back-link" href="index.html">← Volver a los accesos</a>
+      </form>
+    </div>
+  </section>
+
+  <div id="appView" class="app-shell" hidden>
+    <header class="topbar">
+      <button id="sidebarToggle" class="icon-btn" aria-label="Abrir menú">☰</button>
+      <a class="top-brand" href="#"><span>SD</span> PANEL</a>
+      <div class="top-user">
+        <div>
+          <strong id="topUserName">Usuario</strong>
+          <small id="topUserRole">Administrador</small>
+        </div>
+        <button id="logoutBtn" class="icon-btn" title="Cerrar sesión">↪</button>
+      </div>
+    </header>
+
+    <aside id="sidebar" class="sidebar">
+      <nav>
+        <button class="nav-item active" data-section="dashboard">⌂ <span>Escritorio</span></button>
+        <button class="nav-item" data-section="users">👥 <span>Gestión de usuarios</span></button>
+        <button class="nav-item" data-section="accounts">▣ <span>Cuentas</span></button>
+        <button class="nav-item" data-section="tickets">◉ <span>Soporte técnico</span><b id="ticketBadge" class="badge">0</b></button>
+        <button class="nav-item" data-section="history">◷ <span>Historial de cuentas</span></button>
+        <button class="nav-item" data-section="content">▶ <span>Estrenos y tráilers</span></button>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <section id="section-dashboard" class="page-section active">
+        <div class="page-heading">
+          <div><h1>Panel administrativo</h1><p id="welcomeText">Resumen general de la plataforma.</p></div>
+          <button id="refreshDashboard" class="btn secondary">Actualizar</button>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card"><span>Revendedores</span><strong id="statUsers">0</strong><small>Usuarios activos</small></article>
+          <article class="stat-card"><span>Cuentas</span><strong id="statAccounts">0</strong><small>Registradas</small></article>
+          <article class="stat-card"><span>Disponibles</span><strong id="statAvailable">0</strong><small>Sin asignar</small></article>
+          <article class="stat-card"><span>Tickets abiertos</span><strong id="statTickets">0</strong><small>Requieren atención</small></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-head"><h2>Últimos tickets</h2><button class="text-btn" data-go="tickets">Ver todos</button></div>
+            <div id="recentTickets" class="list-stack empty-state">Sin registros.</div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><h2>Cuentas próximas a vencer</h2><button class="text-btn" data-go="accounts">Ver cuentas</button></div>
+            <div id="expiringAccounts" class="list-stack empty-state">Sin registros.</div>
+          </article>
+        </div>
+      </section>
+
+      <section id="section-users" class="page-section">
+        <div class="page-heading">
+          <div><h1>Gestión de usuarios</h1><p>Administra la jerarquía de revendedores y personal de soporte.</p></div>
+          <button id="openCreateUser" class="btn success">＋ Nuevo usuario</button>
+        </div>
+        <article class="panel">
+          <div class="toolbar">
+            <input id="userSearch" class="search-input" placeholder="Buscar por nombre o correo">
+            <select id="userRoleFilter"><option value="">Todos los roles</option><option value="reseller">Revendedores</option><option value="support">Soporte</option></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nombre</th><th>Correo</th><th>WhatsApp</th><th>Padre</th><th>Rol</th><th>Estado</th></tr></thead>
+              <tbody id="usersTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="section-accounts" class="page-section">
+        <div class="page-heading">
+          <div><h1>Cuentas de servicio</h1><p>Base central de cuentas Netflix.</p></div>
+          <button id="openCreateAccount" class="btn primary">＋ Añadir cuenta</button>
+        </div>
+        <article class="panel">
+          <div class="toolbar">
+            <input id="accountSearch" class="search-input" placeholder="Buscar por correo">
+            <select id="accountStatusFilter">
+              <option value="">Todos los estados</option>
+              <option value="available">Disponible</option>
+              <option value="assigned">Asignada</option>
+              <option value="suspended">Suspendida</option>
+              <option value="retired">Retirada</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Servicio</th><th>Correo actual</th><th>Tipo</th><th>Revendedor actual</th><th>Cliente</th><th>Estado</th><th>Acciones</th></tr></thead>
+              <tbody id="accountsTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="section-tickets" class="page-section">
+        <div class="page-heading"><div><h1>Tickets de soporte</h1><p>Solicitudes propias y de toda la red.</p></div></div>
+        <article class="panel">
+          <div class="toolbar">
+            <input id="ticketSearch" class="search-input" placeholder="Buscar por título, usuario o cuenta">
+            <select id="ticketStatusFilter">
+              <option value="">Todos los estados</option>
+              <option value="open">Abierto</option><option value="in_review">En revisión</option>
+              <option value="answered">Respondido</option><option value="waiting_user">Esperando usuario</option>
+              <option value="resolved">Resuelto</option><option value="closed">Cerrado</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Usuario</th><th>Título</th><th>Categoría</th><th>Estado</th><th>Cuenta reportada</th><th>Última modificación</th><th></th></tr></thead>
+              <tbody id="ticketsTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="section-history" class="page-section">
+        <div class="page-heading"><div><h1>Historial general de cambios</h1><p>La cuenta anterior permanece como evidencia y la nueva queda activa.</p></div></div>
+        <article class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Cuenta modificada</th><th>Tipo de cambio</th><th>Realizado por</th><th>Fecha</th></tr></thead>
+              <tbody id="historyTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="section-content" class="page-section">
+        <div class="page-heading">
+          <div><h1>Estrenos y recomendaciones</h1><p>Administra portadas, sinopsis y enlaces de tráiler.</p></div>
+          <button id="openCreateContent" class="btn primary">＋ Nueva publicación</button>
+        </div>
+        <div id="contentAdminGrid" class="content-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modalRoot"></div>
+  <div id="toastRoot" class="toast-root"></div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
