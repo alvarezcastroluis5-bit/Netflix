@@ -1,0 +1,77 @@
+CENTRO PREMIUM V3 - INSTALACIÓN COMPLETA
+
+IMPORTANTE
+- El código 071726 NO está incluido ni visible en HTML o JavaScript.
+- Netflix abre directamente https://jp-streaming.pages.dev/
+- No publiques contraseñas externas dentro de GitHub Pages.
+
+PASO 1 - SUPABASE SQL
+1. Abre Supabase > SQL Editor > New query.
+2. Copia todo el archivo sql/bloque_5_sistema_completo.sql.
+3. Pulsa Run.
+4. Debe aparecer: BLOQUE 5 CREADO CORRECTAMENTE.
+
+Este bloque instala:
+- Netflix y Spotify en la misma base.
+- Tickets por plataforma y correo.
+- Carga masiva de correos.
+- Asignación masiva a distribuidores.
+- Edición de propietario y fecha.
+- Perfil con avatar y nombre comercial.
+- Notificaciones con texto e imagen.
+- Storage para avatares e imágenes.
+
+PASO 2 - EDGE FUNCTION
+1. Supabase > Edge Functions > hyper-processor > Code.
+2. Borra el código actual.
+3. Pega todo edge-function-hyper-processor.ts.
+4. Pulsa Deploy new version.
+5. En Settings deja Verify JWT = OFF.
+
+La función permite crear, editar y eliminar/bloquear distribuidores.
+
+PASO 3 - GITHUB
+Reemplaza completamente:
+- index.html
+- admin.html
+- revendedores.html
+- css/styles.css
+- js/config.js
+- js/core.js
+- js/admin.js
+- js/reseller.js
+
+Mantén las carpetas css y js.
+
+PASO 4 - ACTUALIZAR
+1. Espera que GitHub Pages termine de desplegar.
+2. Abre https://cuentaspremiumbo.lat/admin.html
+3. Pulsa Ctrl + F5.
+4. Abre https://cuentaspremiumbo.lat/revendedores.html
+5. Pulsa Ctrl + F5.
+
+PASO 5 - PRUEBAS
+ADMIN:
+- Añadir Netflix y Spotify en bloque.
+- Crear distribuidor.
+- Editar correo, contraseña, nombre y WhatsApp.
+- Ver las cuentas del distribuidor.
+- Asignar correos en bloque.
+- Editar cuenta y buscar propietario por nombre.
+- Crear estreno.
+- Enviar notificación con texto, imagen o ambos.
+
+DISTRIBUIDOR:
+- Abrir Netflix.
+- Filtrar Spotify.
+- Crear distribuidor debajo de su usuario.
+- Crear cliente.
+- Crear ticket con plataforma, correo, error y categoría.
+- Editar perfil y avatar.
+- Activar notificaciones.
+- Probar WhatsApp al creador directo.
+
+REGLA DE FECHAS
+Cada asignación dura exactamente 30 días.
+20/07/2026 + 30 días = 19/08/2026.
+Una reposición cambia el correo, pero conserva todas las fechas.
