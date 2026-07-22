@@ -1,0 +1,289 @@
+<!doctype html><html lang="es" translate="no" class="notranslate"><head><meta charset="utf-8"><meta name="google" content="notranslate"><meta http-equiv="Content-Language" content="es"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Administración · Centro Premium</title><link rel="stylesheet" href="css/styles.css?v=6.16.5"></head>
+<body translate="no" class="notranslate" data-portal="staff">
+<section id="loginView" class="login-screen"><div class="login-stage"><div class="login-showcase"><span class="eyebrow">ADMINISTRACIÓN Y SOPORTE</span><h1>Control total de tu red premium.</h1><p>Gestiona Netflix, Spotify, distribuidores, soporte y comunicaciones.</p><div class="dual-service-art"><div class="service-emblem netflix-emblem">N</div><div class="pulse-line"></div><div class="service-emblem spotify-emblem"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.58 14.43a.75.75 0 0 1-1.03.25c-2.82-1.72-6.38-2.11-10.57-1.16a.75.75 0 1 1-.33-1.46c4.58-1.04 8.51-.59 11.68 1.35.35.21.46.67.25 1.02Zm1.47-3.28a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.97-1.39a.94.94 0 1 1-.55-1.79c4.37-1.33 9.8-.69 13.5 1.58.44.27.58.85.31 1.29Zm.13-3.42C14.3 7.43 7.9 7.22 4.2 8.34a1.12 1.12 0 1 1-.65-2.14c4.25-1.29 11.32-1.04 15.77 1.6a1.12 1.12 0 0 1-1.14 1.93Z"/></svg></div></div></div><form id="loginForm" class="login-panel"><span class="eyebrow">INICIAR SESIÓN</span><h2>Acceso interno</h2><p>Ingresa con tu correo y contraseña autorizados.</p><label><span>Correo electrónico</span><input id="loginEmail" type="email" required></label><label><span>Contraseña</span><input id="loginPassword" type="password" required></label><label class="inline-check"><input id="rememberSession" type="checkbox"> Mantener sesión iniciada</label><button id="loginSubmitBtn" class="btn primary block" type="submit">Ingresar</button><div id="loginError" class="form-error" hidden></div></form></div></section>
+<div id="appView" class="app-layout" hidden>
+<header class="app-topbar"><button id="sidebarToggle" class="icon-button">☰</button><div class="app-identity"><span class="identity-mark">P</span><div><strong>Centro Premium</strong><small>Administración</small></div></div><div class="topbar-spacer"></div><button id="notificationBell" class="notification-button"><span>◆</span><b id="notificationBadge" hidden>0</b></button><button id="logoutBtn" class="logout-button">Cerrar sesión</button></header>
+<aside id="sidebar" class="app-sidebar"><nav><button class="nav-link active" data-section="dashboard"><span>⌂</span><b>Escritorio</b></button><button class="nav-link" data-section="services"><span>◆</span><b>Servicios</b></button><button class="nav-link" data-section="users"><span>◇</span><b>Usuarios</b></button><button class="nav-link" data-section="accounts"><span>▣</span><b>Cuentas</b></button><button class="nav-link" data-section="tickets"><span>◉</span><b>Soporte</b><i id="ticketBadge">0</i></button><button class="nav-link" data-section="history"><span>◷</span><b>Historial</b></button><button class="nav-link" data-section="content"><span>▶</span><b>Estrenos</b></button><button class="nav-link" data-section="help"><span>?</span><b>Preguntas y uso</b></button><button class="nav-link" data-section="notifications"><span>✦</span><b>Notificaciones</b></button></nav></aside>
+<main class="app-main">
+<section id="section-dashboard" class="page-section active">
+<div id="adminDashboardSummary">
+<div class="hero-strip"><div><span class="eyebrow">RESUMEN GENERAL</span><h1 id="dashboardGreeting">Hola</h1><p>Estado de la red, cuentas y soporte.</p></div></div>
+<div class="metric-grid">
+<article class="metric-card cyan"><span>Distribuidores activos</span><strong id="statUsers">0</strong><small>En toda la red</small></article>
+<article class="metric-card violet"><span>Cuentas registradas</span><strong id="statAccounts">0</strong><small>Netflix y Spotify</small></article>
+<article
+  id="availableAccountsMetric"
+  class="metric-card green metric-card-link"
+  role="button"
+  tabindex="0"
+  title="Ver las cuentas realmente disponibles"
+>
+  <span>Disponibles reales</span>
+  <strong id="statAvailable">0</strong>
+  <small>Pulsa para verlas</small>
+</article>
+<article class="metric-card orange"><span>Tickets pendientes</span><strong id="statTickets">0</strong><small>Requieren atención</small></article>
+</div>
+<div class="dashboard-columns">
+<article class="glass-panel span-two"><div class="panel-heading"><div><span class="eyebrow">CUENTAS</span><h2>Actividad reciente</h2></div><button class="text-button" data-go="accounts">Ver cuentas</button></div><div id="recentAccounts" class="activity-feed"></div></article>
+<article class="glass-panel"><div class="panel-heading"><div><span class="eyebrow">SOPORTE</span><h2>Últimos tickets</h2></div></div><div id="recentTickets" class="stack-list"></div></article>
+</div>
+</div>
+
+<div id="supportDashboardSummary" hidden>
+<div class="hero-strip support-hero"><div><span class="eyebrow">RESUMEN GENERAL</span><h1 id="supportDashboardGreeting">Centro de soporte</h1><p>Gestiona garantías, respuestas y solicitudes pendientes.</p></div><button class="btn success" data-go="tickets">Atender tickets</button></div>
+<div class="support-metric-grid">
+<article class="metric-card orange"><span>Tickets pendientes</span><strong id="supportPendingTickets">0</strong><small>Sin resolver</small></article>
+<article class="metric-card cyan"><span>En revisión</span><strong id="supportReviewTickets">0</strong><small>Actualmente atendidos</small></article>
+<article class="metric-card green"><span>Tickets resueltos</span><strong id="supportResolvedTickets">0</strong><small>Garantías y respuestas finalizadas</small></article>
+</div>
+<div class="dashboard-columns">
+<article class="glass-panel span-two"><div class="panel-heading"><div><span class="eyebrow">POR ATENDER</span><h2>Tickets pendientes</h2></div><button class="text-button support-ticket-filter" data-support-status="pending">Ver todos</button></div><div id="supportPendingList" class="activity-feed"></div></article>
+<article class="glass-panel"><div class="panel-heading"><div><span class="eyebrow">FINALIZADOS</span><h2>Resueltos recientemente</h2></div></div><div id="supportResolvedList" class="stack-list"></div></article>
+</div>
+</div>
+</section>
+<section id="section-services" class="page-section">
+<div class="page-header">
+  <div>
+    <span class="eyebrow">PLATAFORMAS</span>
+    <h1>Servicios</h1>
+    <p>Accede a Netflix o filtra la administración de cuentas Spotify.</p>
+  </div>
+</div>
+<div class="service-launch-grid">
+  <button id="adminOpenNetflixService" class="launch-card netflix-launch">
+    <div class="launch-logo">N</div>
+    <span>Netflix</span>
+    <p>Acceso al centro externo de códigos y verificaciones.</p>
+    <b>Abrir Netflix →</b>
+  </button>
+  <button id="adminOpenSpotifyService" class="launch-card spotify-launch">
+    <div class="launch-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.58 14.43a.75.75 0 0 1-1.03.25c-2.82-1.72-6.38-2.11-10.57-1.16a.75.75 0 1 1-.33-1.46c4.58-1.04 8.51-.59 11.68 1.35.35.21.46.67.25 1.02Zm1.47-3.28a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.97-1.39a.94.94 0 1 1-.55-1.79c4.37-1.33 9.8-.69 13.5 1.58.44.27.58.85.31 1.29Zm.13-3.42C14.3 7.43 7.9 7.22 4.2 8.34a1.12 1.12 0 1 1-.65-2.14c4.25-1.29 11.32-1.04 15.77 1.6a1.12 1.12 0 0 1-1.14 1.93Z"/></svg>
+    </div>
+    <span>Spotify</span>
+    <p>Abre la sección Cuentas mostrando solamente Spotify.</p>
+    <b>Ver Spotify →</b>
+  </button>
+</div>
+</section><section id="section-users" class="page-section">
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">CONTROL DE ACCESOS</span>
+      <h1>Usuarios</h1>
+      <p>Aquí aparece toda la jerarquía de distribuidores, indicando quién creó cada usuario.</p>
+    </div>
+    <button id="openCreateUser" class="btn success">＋ Nuevo usuario</button>
+  </div>
+
+  <article class="glass-panel">
+    <div class="filter-bar multi">
+      <input
+        id="userSearch"
+        class="search-control"
+        placeholder="Buscar por correo o nombre"
+      >
+
+      <select id="userRoleFilter">
+        <option value="">Todos los tipos</option>
+        <option value="reseller">Distribuidores</option>
+        <option value="support">Personal de soporte</option>
+      </select>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nombre del distribuidor</th>
+            <th>Correo</th>
+            <th>Padre</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="usersTable"></tbody>
+      </table>
+    </div>
+  </article>
+</section>
+<section id="section-accounts" class="page-section">
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">BASE CENTRAL</span>
+      <h1>Cuentas de servicio</h1>
+      <p>Netflix y Spotify, con regla exacta de 30 días.</p>
+    </div>
+
+    <div id="adminAccountBulkActions" class="page-header-actions account-main-actions">
+      <button id="exportAdminAccounts" class="btn export-accounts-button">
+        ⇩ Exportar cuentas
+      </button>
+
+      <button id="openAdminUpdateDates" class="btn update-dates-button">
+        ↻ Actualizar fechas
+      </button>
+
+      <button id="openCreateAccount" class="btn primary">
+        ＋ Añadir en bloque
+      </button>
+
+      <button id="openBulkDeleteAccounts" class="btn danger">
+        🗑 Eliminar en bloque
+      </button>
+    </div>
+  </div>
+
+  <article class="glass-panel">
+    <div class="filter-bar multi accounts-filter-bar">
+      <input
+        id="accountSearch"
+        class="search-control"
+        placeholder="Buscar correo, país, tipo o propietario"
+      >
+
+      <select id="accountServiceFilter">
+        <option value="">Todos los servicios</option>
+        <option value="netflix">Netflix</option>
+        <option value="spotify">Spotify</option>
+      </select>
+
+      <select id="accountStatusFilter">
+        <option value="">Todos los estados</option>
+        <option value="available">Disponible</option>
+        <option value="assigned">Asignada</option>
+      </select>
+
+      <select id="adminAccountsPageSize" class="page-size-select">
+        <option value="25">25 por página</option>
+        <option value="50">50 por página</option>
+        <option value="100">100 por página</option>
+      </select>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Servicio</th>
+            <th>Correo</th>
+            <th>País</th>
+            <th>Tipo</th>
+            <th>Propietario</th>
+            <th>Fecha de corte</th>
+            <th>Días restantes</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="accountsTable"></tbody>
+      </table>
+    </div>
+
+    <div class="accounts-pagination-footer">
+      <span id="adminAccountsCount" class="pagination-summary"></span>
+      <nav id="adminAccountsPagination" class="pagination-controls"></nav>
+    </div>
+  </article>
+</section>
+<section id="section-tickets" class="page-section">
+<div class="page-header"><div><span class="eyebrow">CENTRO DE SOPORTE</span><h1>Tickets</h1><p>Pendientes, atendidos y resueltos de toda la red.</p></div><div class="page-header-actions support-main-actions"><button id="exportAdminTickets" class="btn export-accounts-button">⇩ Exportar tickets</button><button id="adminCreateTicket" class="btn success">＋ Crear ticket</button></div></div>
+<div class="support-ticket-tabs"><button class="support-tab active" data-ticket-view="">Todos</button><button class="support-tab" data-ticket-view="pending">Pendientes</button><button class="support-tab" data-ticket-view="resolved">Resueltos</button></div>
+<article class="glass-panel"><div class="filter-bar multi support-filter-bar">
+<input id="ticketSearch" class="search-control" placeholder="Buscar usuario, título o correo">
+<select id="ticketServiceFilter"><option value="">Todas las plataformas</option><option value="netflix">Netflix</option><option value="spotify">Spotify</option></select>
+<select id="ticketStatusFilter"><option value="">Todos los estados</option><option value="open">Pendiente de resolver</option><option value="in_review">En proceso</option><option value="closed">Cerrado</option></select>
+<select id="adminTicketsPageSize" class="page-size-select"><option value="25">25 por página</option><option value="50">50 por página</option><option value="100">100 por página</option></select>
+</div><div class="table-scroll"><table class="data-table"><thead><tr><th>Distribuidor</th><th>Plataforma</th><th>Error</th><th>Categoría</th><th>Correo</th><th>Estado</th><th></th></tr></thead><tbody id="ticketsTable"></tbody></table></div><div class="accounts-pagination-footer"><span id="adminTicketsCount" class="pagination-summary"></span><nav id="adminTicketsPagination" class="pagination-controls"></nav></div></article>
+</section>
+<section id="section-history" class="page-section"><div class="page-header"><div><span class="eyebrow">TRAZABILIDAD</span><h1>Historial de cambios</h1></div></div><article class="glass-panel"><div class="table-scroll"><table class="data-table"><thead><tr><th>Servicio</th><th>Cambio</th><th>Tipo</th><th>Responsable</th><th>Fecha</th></tr></thead><tbody id="historyTable"></tbody></table></div></article></section>
+<section id="section-content" class="page-section"><div class="page-header"><div><span class="eyebrow">CONTENIDO</span><h1>Estrenos y recomendaciones</h1></div><button id="openCreateContent" class="btn primary">＋ Nueva publicación</button></div><div id="contentAdminGrid" class="content-gallery"></div></section>
+<section id="section-help" class="page-section">
+<div class="page-header"><div><span class="eyebrow">CENTRO DE AYUDA</span><h1>Preguntas frecuentes y cómo utilizar</h1><p>Publica preguntas, respuestas, tutoriales, imágenes y videos para los distribuidores.</p></div><button id="openCreateHelpArticle" class="btn primary">＋ Nuevo contenido</button></div>
+<div class="help-admin-filters"><select id="helpTypeFilter"><option value="">Preguntas y tutoriales</option><option value="faq">Preguntas frecuentes</option><option value="guide">Cómo utilizar</option></select></div>
+<div id="helpAdminGrid" class="help-article-grid"></div>
+</section>
+<section id="section-notifications" class="page-section">
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">COMUNICACIONES</span>
+      <h1>Enviar avisos</h1>
+      <p>Puedes enviar un aviso solo con texto. La imagen es completamente opcional.</p>
+    </div>
+  </div>
+
+  <div class="notification-compose-grid">
+    <article class="glass-panel">
+      <form id="notificationForm" class="form-grid">
+        <label class="full">
+          <span>Alcance del aviso</span>
+          <select name="scope" id="adminNotificationScope">
+            <option value="selected">Seleccionar usuarios</option>
+            <option value="all_distributors">Todos los distribuidores</option>
+            <option value="all_panel">Todos los usuarios del panel</option>
+          </select>
+        </label>
+
+        <label class="full">
+          <span>Título</span>
+          <input name="title" maxlength="120" required>
+        </label>
+
+        <label class="full">
+          <span>Mensaje</span>
+          <textarea
+            name="message"
+            rows="7"
+            placeholder="Escribe el texto del aviso. No necesitas adjuntar una imagen."
+          ></textarea>
+        </label>
+
+        <label class="full">
+          <span>Imagen opcional</span>
+          <input name="image" type="file" accept="image/png,image/jpeg,image/webp">
+        </label>
+
+        <label class="notification-forward-control full">
+          <input name="allow_forward" type="checkbox">
+          <span>
+            Permitir que los distribuidores destinatarios reenvíen este aviso
+            a su propia red directa.
+          </span>
+        </label>
+
+        <div class="notice-box full">
+          <strong>Todos los distribuidores:</strong> incluye todos los niveles de la red.
+          <br>
+          <strong>Todo el panel:</strong> incluye distribuidores, soporte y otros administradores activos.
+        </div>
+
+        <button class="btn primary full" type="submit">
+          Enviar aviso
+        </button>
+      </form>
+    </article>
+
+    <article id="adminRecipientPanel" class="glass-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">DESTINATARIOS</span>
+          <h2>Usuarios específicos</h2>
+        </div>
+
+        <button id="selectAllRecipients" class="text-button" type="button">
+          Seleccionar todos
+        </button>
+      </div>
+
+      <input
+        id="recipientSearch"
+        class="search-control"
+        placeholder="Buscar distribuidor o soporte"
+      >
+
+      <div id="recipientList" class="recipient-list"></div>
+    </article>
+  </div>
+</section>
+</main></div><div id="modalRoot"></div><div id="toastRoot" class="toast-root"></div><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script type="module" src="js/bootstrap-admin.js?v=6.16.5"></script></body></html>
