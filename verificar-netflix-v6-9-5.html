@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es" translate="no" class="notranslate">
+<head>
+  <meta charset="utf-8">
+  <meta name="google" content="notranslate">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+  <title>Verificar Netflix V6.9.5</title>
+  <link
+    rel="stylesheet"
+    href="./css/styles.css?v=6.9.14"
+  >
+</head>
+<body>
+  <main style="max-width:900px;margin:40px auto;padding:20px">
+    <article class="glass-panel">
+      <span class="eyebrow">DIAGNÓSTICO</span>
+      <h1>Netflix V6.9.5</h1>
+      <p>
+        Comprueba que el navegador recibió la interfaz de cuatro pasos.
+      </p>
+      <div id="checks" class="stack-list">Verificando…</div>
+    </article>
+  </main>
+
+  <script>
+    async function verify(){
+      const response=await fetch(
+        `js/core-6.9.5.js?check=${Date.now()}`,
+        {cache:"no-store"}
+      );
+
+      const text=await response.text();
+
+      const checks=[
+        [
+          "Solo cuatro pasos",
+          !text.includes('data-netflix-step="5"')
+        ],
+        [
+          "Botón sin número 5",
+          !text.includes("5. Procesar solicitud")
+        ],
+        [
+          "Sin texto sobre Supabase",
+          !text.includes(
+            "El PIN se comprueba de forma segura en Supabase"
+          )
+        ],
+        [
+          "Versión correcta",
+          text.includes(
+            "Centro Premium Netflix V6.9.5 cargado"
+          )
+        ]
+      ];
+
+      document.querySelector("#checks").innerHTML=
+        checks.map(([name,ok])=>`
+          <div class="stack-row">
+            <strong>${name}</strong>
+            <span class="status-pill ${
+              ok?"active":"expired"
+            }">
+              ${ok?"CORRECTO":"INCORRECTO"}
+            </span>
+          </div>
+        `).join("");
+    }
+
+    verify().catch(error=>{
+      document.querySelector("#checks").textContent=
+        error.message;
+    });
+  </script>
+</body>
+</html>
