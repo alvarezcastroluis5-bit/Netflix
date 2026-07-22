@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html class="notranslate" lang="es" translate="no"><head><meta charset="utf-8"/><meta content="notranslate" name="google"/><meta content="es" http-equiv="Content-Language"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Distribuidores · Centro Premium</title><link href="./css/styles.css?v=6.9.7" id="mainStylesheet" onerror="this.onerror=null;this.href='./styles.css?v=6.9.7'" rel="stylesheet"/></head><body class="notranslate" data-portal="distributor" translate="no">
+<section class="login-screen" id="loginView"><div class="login-stage"><div class="login-showcase"><span class="eyebrow">PORTAL DE DISTRIBUIDORES</span><h1>Tu negocio premium, organizado.</h1><p>Controla Netflix, Spotify, distribuidores, cobros, soporte y novedades.</p><div class="dual-service-art"><div class="service-emblem netflix-emblem">N</div><div class="pulse-line"></div><div class="service-emblem spotify-emblem"><svg viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.58 14.43a.75.75 0 0 1-1.03.25c-2.82-1.72-6.38-2.11-10.57-1.16a.75.75 0 1 1-.33-1.46c4.58-1.04 8.51-.59 11.68 1.35.35.21.46.67.25 1.02Zm1.47-3.28a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.97-1.39a.94.94 0 1 1-.55-1.79c4.37-1.33 9.8-.69 13.5 1.58.44.27.58.85.31 1.29Zm.13-3.42C14.3 7.43 7.9 7.22 4.2 8.34a1.12 1.12 0 1 1-.65-2.14c4.25-1.29 11.32-1.04 15.77 1.6a1.12 1.12 0 0 1-1.14 1.93Z"></path></svg></div></div></div><form class="login-panel" id="loginForm"><span class="eyebrow">BIENVENIDO</span><h2>Acceso de distribuidores</h2><p>Ingresa con el correo y contraseña asignados.</p><label><span>Correo electrónico</span><input id="loginEmail" required="" type="email"/></label><label><span>Contraseña</span><input id="loginPassword" required="" type="password"/></label><label class="inline-check"><input id="rememberSession" type="checkbox"/> Mantener sesión iniciada</label><button class="login-forgot-button" id="forgotPasswordBtn" type="button">¿Olvidaste tu clave?</button><button class="btn primary block" id="loginSubmitBtn" type="submit">Ingresar</button><div class="form-error" hidden="" id="loginError"></div></form></div></section>
+<div class="app-layout" hidden="" id="appView"><header class="app-topbar"><button class="icon-button" id="sidebarToggle">☰</button><div class="app-identity"><span class="identity-mark" id="panelBrandMark">P</span><div><strong id="panelBrandName">Centro Premium</strong></div></div><div class="topbar-spacer"></div><button aria-label="Notificaciones pendientes" class="notification-button" id="notificationBell"><span>🔔</span><b hidden="" id="notificationBadge">0</b></button><div class="user-menu"><button class="user-menu-toggle" id="userMenuToggle"><span class="topbar-user-avatar" id="topbarUserAvatar">U</span><span><strong id="topbarUserName">Usuario</strong><small id="topbarUserRole">Distribuidor</small></span><span class="user-menu-arrow">⌄</span></button><div class="user-menu-dropdown" hidden="" id="userMenuDropdown"><button id="userMenuLogout">Cerrar sesión</button></div></div></header>
+<aside class="app-sidebar" id="sidebar"><nav><button class="nav-link active" data-section="dashboard"><span>⌂</span><b>Escritorio</b></button><button class="nav-link" data-section="services"><span>◆</span><b>Servicios</b></button><button class="nav-link" data-section="network"><span>◇</span><b>Usuarios</b></button><button class="nav-link" data-section="accounts"><span>▣</span><b>Cuentas</b></button><button class="nav-link" data-section="tickets"><span>◉</span><b>Soporte</b><i id="ticketBadge">0</i></button><button class="nav-link" data-section="history"><span>◷</span><b>Historial</b></button><button class="nav-link" data-section="profile"><span>♙</span><b>Perfil</b></button><button class="nav-link" data-section="help"><span>?</span><b>Preguntas y uso</b></button></nav></aside>
+<main class="app-main">
+<section class="page-section active" id="section-dashboard"><div class="distributor-hero"><div class="hero-profile"><img hidden="" id="dashboardAvatar"/><span id="dashboardAvatarFallback">D</span><div><span class="eyebrow">TU CENTRO DE OPERACIONES</span><h1 id="welcomeTitle">¡Bienvenido!</h1><p>Gestiona tu red, cuentas y soporte.</p></div></div></div><div class="metric-grid"><article class="metric-card cyan"><span>Usuarios directos</span><strong id="statNetwork">0</strong><small>Distribuidores creados por ti</small></article><article class="metric-card violet"><span>Cuentas visibles</span><strong id="statAccounts">0</strong><small>Netflix y Spotify</small></article><article class="metric-card green"><span>Próximos cobros</span><strong id="statExpiring">0</strong><small>Vencen en 3 días</small></article><article class="metric-card orange"><span>Tickets abiertos</span><strong id="statTickets">0</strong><small>Propios y de la red</small></article></div><div class="dashboard-columns"><article class="glass-panel span-two"><div class="panel-heading"><div><span class="eyebrow">CUENTAS</span><h2>Resumen</h2></div><button class="text-button" data-go="accounts">Ver todas</button></div><div class="table-scroll compact"><table class="data-table"><thead><tr><th>Servicio</th><th>Correo</th><th>Asignada a</th><th>Inicio</th><th>Días</th><th>Estado</th></tr></thead><tbody id="dashboardAccountsTable"></tbody></table></div></article><article class="glass-panel"><div class="panel-heading"><div><span class="eyebrow">COBROS</span><h2>Próximos</h2></div></div><div class="stack-list" id="upcomingPayments"></div></article><article class="glass-panel span-two"><div class="panel-heading"><div><span class="eyebrow">NOVEDADES</span><h2>Estrenos y recomendaciones</h2></div></div><div class="horizontal-content" id="featuredContent"></div></article></div></section>
+<section class="page-section" id="section-services"><div class="page-header"><div><span class="eyebrow">PLATAFORMAS</span><h1>Servicios</h1><p>Servicios disponibles y próximos lanzamientos.</p></div></div><div class="service-launch-grid" id="resellerServiceCatalogGrid"></div></section>
+<section class="page-section" id="section-accounts">
+<div class="page-header">
+<div>
+<span class="eyebrow">MIS SERVICIOS</span>
+<h1>Cuentas</h1>
+<p>Aquí aparecen todas las cuentas actuales de tu rama, sin duplicados y con su propietario real.</p>
+</div>
+<div class="page-header-actions account-main-actions">
+<button class="btn export-accounts-button" id="exportResellerAccounts">
+        ⇩ Exportar cuentas
+      </button>
+<button class="btn update-dates-button" id="openBulkUpdateAccounts">
+        ↻ Actualizar fechas
+      </button>
+</div>
+</div>
+<article class="glass-panel">
+<div class="filter-bar multi">
+<input class="search-control" id="accountSearch" placeholder="Buscar correo, país, tipo o propietario"/>
+<select id="accountServiceFilter">
+<option value="">Todos los servicios</option>
+<option value="netflix">Netflix</option>
+<option value="spotify">Spotify</option>
+</select>
+<select class="page-size-select" id="resellerAccountsPageSize">
+<option value="25">25 por página</option>
+<option value="50">50 por página</option>
+<option value="100">100 por página</option>
+</select>
+</div>
+<div class="accounts-security-note">
+      Solo puedes asignar las cuentas que estén actualmente a tu nombre.
+      Las cuentas entregadas a otro distribuidor quedan en modo de consulta.
+    </div>
+<div class="table-scroll">
+<table class="data-table">
+<thead>
+<tr>
+<th>Servicio</th>
+<th>Correo</th>
+<th>País</th>
+<th>Tipo</th>
+<th>Propietario</th>
+<th>Fecha de corte</th>
+<th>Días restantes</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="accountsTable"></tbody>
+</table>
+</div>
+<div class="accounts-pagination-footer">
+<span class="pagination-summary" id="resellerAccountsCount"></span>
+<nav class="pagination-controls" id="resellerAccountsPagination"></nav>
+</div>
+</article>
+</section>
+<section class="page-section" id="section-network">
+<div class="page-header">
+<div>
+<span class="eyebrow">MI RED</span>
+<h1>Usuarios</h1>
+<p>Aquí aparecen únicamente los distribuidores que tú creaste directamente.</p>
+</div>
+<button class="btn success" id="openCreateDistributor">
+      ＋ Crear distribuidor
+    </button>
+</div>
+<article class="glass-panel">
+<div class="filter-bar multi">
+<input class="search-control" id="networkSearch" placeholder="Buscar por correo o nombre"/>
+</div>
+<div class="table-scroll">
+<table class="data-table">
+<thead>
+<tr>
+<th>Nombre del distribuidor</th>
+<th>Correo</th>
+<th>Padre</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="networkTable"></tbody>
+</table>
+</div>
+</article>
+</section>
+
+<section class="page-section" id="section-tickets"><div class="page-header"><div><span class="eyebrow">SOPORTE</span><h1>Soporte</h1></div><div class="page-header-actions support-main-actions"><button class="btn success" id="openCreateTicket">＋ Nuevo ticket</button></div></div><article class="glass-panel"><div class="filter-bar multi support-filter-bar"><input class="search-control" id="resellerTicketSearch" placeholder="Buscar título, correo o categoría"/><select class="page-size-select" id="resellerTicketsPageSize"><option value="25">25 por página</option><option value="50">50 por página</option><option value="100">100 por página</option></select></div><div class="table-scroll"><table class="data-table"><thead><tr><th>Distribuidor</th><th>Plataforma</th><th>Error</th><th>Categoría</th><th>Correo</th><th>Estado</th><th></th></tr></thead><tbody id="ticketsTable"></tbody></table></div><div class="accounts-pagination-footer"><span class="pagination-summary" id="resellerTicketsCount"></span><nav class="pagination-controls" id="resellerTicketsPagination"></nav></div></article></section>
+<section class="page-section" id="section-history"><div class="page-header"><div><span class="eyebrow">CAMBIOS</span><h1>Historial</h1></div></div><article class="glass-panel"><div class="table-scroll"><table class="data-table"><thead><tr><th>Servicio</th><th>Cambio</th><th>Tipo</th><th>Responsable</th><th>Fecha</th></tr></thead><tbody id="historyTable"></tbody></table></div></article></section>
+
+<section class="page-section" id="section-help">
+<div class="page-header"><div><span class="eyebrow">CENTRO DE AYUDA</span><h1>Preguntas frecuentes y cómo utilizar</h1><p>Encuentra respuestas, imágenes y tutoriales publicados por administración.</p></div></div>
+<div class="help-public-toolbar"><button class="help-public-tab active" data-help-public-filter="">Todo</button><button class="help-public-tab" data-help-public-filter="faq">Preguntas frecuentes</button><button class="help-public-tab" data-help-public-filter="guide">Cómo utilizar</button></div>
+<div class="help-article-grid" id="helpPublicGrid"></div>
+</section>
+<section class="page-section" id="section-profile">
+<div class="page-header">
+<div>
+<span class="eyebrow">PERSONALIZACIÓN</span>
+<h1>Mi perfil</h1>
+<p>Tu información comercial es administrada por tu distribuidor principal.</p>
+</div>
+</div>
+<article class="glass-panel profile-editor profile-photo-only">
+<div class="avatar-editor">
+<img alt="Foto del distribuidor" hidden="" id="profileAvatarPreview"/>
+<span id="profileAvatarFallback">D</span>
+<label class="btn secondary profile-photo-picker">
+<input accept="image/png,image/jpeg,image/webp" hidden="" id="profileAvatarFile" type="file"/>
+        Cambiar imagen
+      </label>
+</div>
+<div class="profile-commercial-summary">
+<span class="eyebrow">NOMBRE COMERCIAL</span>
+<strong id="profileBusinessName">Distribuidor</strong>
+<p>
+        Este nombre y tus demás datos solo pueden ser modificados desde administración.
+      </p>
+<button class="btn primary" disabled="" id="saveProfilePhoto" type="button">
+        Guardar fotografía
+      </button>
+</div>
+</article>
+</section>
+
+</main><a class="whatsapp-float" id="parentWhatsappBtn" rel="noopener" target="_blank"><svg viewbox="0 0 32 32"><path d="M16.04 3C9.4 3 4 8.32 4 14.86c0 2.52.8 4.86 2.17 6.78L4.7 27l5.55-1.44a12.1 12.1 0 0 0 5.78 1.47C22.67 27.03 28 21.71 28 15.17S22.67 3 16.04 3Zm0 21.87c-1.82 0-3.58-.49-5.12-1.42l-.36-.22-3.3.86.88-3.2-.24-.37a9.62 9.62 0 0 1-1.53-5.2c0-5.33 4.35-9.67 9.7-9.67 5.34 0 9.68 4.34 9.68 9.67s-4.34 9.55-9.7 9.55Zm5.31-7.24c-.29-.14-1.72-.84-1.99-.94-.27-.1-.47-.14-.67.15-.2.29-.77.94-.94 1.13-.17.2-.35.22-.64.08-.29-.15-1.23-.45-2.34-1.43a8.8 8.8 0 0 1-1.62-2c-.17-.29-.02-.45.13-.59.13-.13.29-.34.44-.51.14-.17.19-.29.29-.49.1-.19.05-.36-.03-.51-.07-.14-.67-1.6-.92-2.2-.24-.57-.49-.5-.67-.5h-.57c-.2 0-.52.08-.79.37-.27.29-1.04 1.01-1.04 2.47 0 1.45 1.07 2.86 1.21 3.06.15.19 2.1 3.18 5.08 4.46.71.3 1.27.49 1.7.63.72.22 1.37.19 1.88.12.58-.09 1.72-.7 1.97-1.37.24-.68.24-1.26.17-1.38-.07-.12-.26-.19-.55-.34Z" fill="currentColor"></path></svg></a></div><div id="modalRoot"></div><div class="toast-root" id="toastRoot"></div><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script type="module" src="js/bootstrap-reseller-6.9.7.js"></script></body></html>
