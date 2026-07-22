@@ -1,0 +1,139 @@
+<!doctype html>
+<html
+  lang="es"
+  translate="no"
+  class="notranslate"
+>
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="google"
+    content="notranslate"
+  >
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>Verificar Netflix V6.9.8</title>
+
+  <link
+    rel="stylesheet"
+    href="./css/styles.css?v=6.9.10"
+  >
+</head>
+
+<body>
+  <main
+    style="
+      max-width:900px;
+      margin:35px auto;
+      padding:20px
+    "
+  >
+    <article class="glass-panel">
+      <span class="eyebrow">
+        DIAGNÓSTICO
+      </span>
+
+      <h1>
+        Netflix V6.9.8
+      </h1>
+
+      <p>
+        Comprueba que se cargó el flujo limpio.
+      </p>
+
+      <div
+        id="checks"
+        class="stack-list"
+      >
+        Verificando…
+      </div>
+    </article>
+  </main>
+
+  <script type="module">
+    const response=await fetch(
+      `js/core-6.9.8.js?check=${Date.now()}`,
+      {
+        cache:"no-store"
+      }
+    );
+
+    const text=await response.text();
+
+    const checks=[
+      [
+        "Sin Cancelar",
+        !text.includes("modal-cancel")
+      ],
+      [
+        "Sin Procesar solicitud",
+        !text.includes(
+          "processNetflixNative"
+        )
+        &&!text.includes(
+          ">Procesar solicitud<"
+        )
+      ],
+      [
+        "PIN general visible",
+        text.includes(
+          'NETFLIX_GENERAL_PIN="071726"'
+        )
+      ],
+      [
+        "Copiar PIN",
+        text.includes(
+          "copyNetflixCleanPin"
+        )
+      ],
+      [
+        "Copiar correo",
+        text.includes(
+          "copyNetflixCleanEmail"
+        )
+      ],
+      [
+        "Abrir Netflix",
+        text.includes(
+          "openNetflixClean"
+        )
+      ],
+      [
+        "Sin correo externo de ejemplo",
+        !text.includes(
+          "Netflix@jp-streaming.com"
+        )
+      ]
+    ];
+
+    document.querySelector(
+      "#checks"
+    ).innerHTML=checks.map(
+      ([name,ok])=>`
+        <div class="stack-row">
+          <strong>${name}</strong>
+
+          <span
+            class="status-pill ${
+              ok
+                ?"active"
+                :"expired"
+            }"
+          >
+            ${
+              ok
+                ?"CORRECTO"
+                :"INCORRECTO"
+            }
+          </span>
+        </div>
+      `
+    ).join("");
+  </script>
+</body>
+</html>
