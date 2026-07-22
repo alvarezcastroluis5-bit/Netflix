@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prueba responsive V6.9.9</title>
+  <link rel="stylesheet" href="./css/styles.css?v=6.9.20">
+</head>
+<body>
+  <header class="app-topbar">
+    <button class="icon-button">☰</button>
+    <div class="app-identity">
+      <span class="identity-mark">C</span>
+      <div><strong id="panelBrandName">Centro Premium</strong></div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <button class="notification-button">🔔</button>
+    <div class="user-menu">
+      <button class="user-menu-toggle">
+        <span class="topbar-user-avatar">L</span>
+        <span><strong>Luis Álvarez</strong><small>Administración</small></span>
+      </button>
+    </div>
+  </header>
+
+  <aside class="app-sidebar" id="sidebar">
+    <nav>
+      <button class="nav-link"><span>⌂</span><b>Escritorio</b></button>
+      <button class="nav-link"><span>◆</span><b>Servicios</b></button>
+      <button class="nav-link"><span>◇</span><b>Usuarios</b></button>
+      <button class="nav-link active"><span>▣</span><b>Cuentas</b></button>
+      <button class="nav-link"><span>◉</span><b>Soporte</b></button>
+      <button class="nav-link"><span>◷</span><b>Historial</b></button>
+    </nav>
+  </aside>
+
+  <main class="app-main">
+    <section class="page-section active">
+      <div class="page-header">
+        <div>
+          <span class="eyebrow">BASE CENTRAL</span>
+          <h1>Cuentas de servicio</h1>
+          <p>Netflix y Spotify, con regla exacta de 30 días.</p>
+        </div>
+        <div class="page-header-actions account-main-actions">
+          <button class="btn primary">Exportar cuentas</button>
+          <button class="btn warning">Actualizar fechas</button>
+          <button class="btn primary">Añadir en bloque</button>
+          <button class="btn danger">Eliminar en bloque</button>
+        </div>
+      </div>
+
+      <article class="glass-panel">
+        <div class="filter-bar multi accounts-filter-bar">
+          <input placeholder="Buscar correo o propietario">
+          <select><option>Todos los servicios</option></select>
+          <select><option>Todos los estados</option></select>
+          <select><option>25 por página</option></select>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Servicio</th><th>Correo</th><th>País</th>
+                <th>Tipo</th><th>Propietario</th><th>Fecha de corte</th>
+                <th>Días restantes</th><th>Estado</th><th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Netflix</td>
+                <td>cuenta-ejemplo-muy-larga@hotmail.com</td>
+                <td>BR</td>
+                <td>Cuenta completa</td>
+                <td>PACO / STRSHOPPING</td>
+                <td>19/08/2026</td>
+                <td>29</td>
+                <td>Activo</td>
+                <td><button class="action-button">Editar</button></td>
+              </tr>
+              <tr>
+                <td>Netflix</td>
+                <td>segunda-cuenta@hotmail.com</td>
+                <td>BR</td>
+                <td>Cuenta completa</td>
+                <td>STRSHOPPING / Luis Álvarez</td>
+                <td>19/08/2026</td>
+                <td>29</td>
+                <td>Activo</td>
+                <td><button class="action-button">Editar</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
