@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Verificar V6.9.18.1</title>
+  <link rel="stylesheet" href="./css/styles.css?v=6.9.18.2">
+</head>
+<body>
+  <main style="max-width:940px;margin:30px auto;padding:16px">
+    <article class="glass-panel">
+      <span class="eyebrow">VERIFICACIÓN</span>
+      <h1>Centro Premium V6.9.18.1</h1>
+      <p>
+        Actualizaciones automáticas silenciosas y cargador únicamente
+        para acciones del usuario.
+      </p>
+      <div id="checks">Verificando…</div>
+    </article>
+  </main>
+
+  <script type="module">
+    const checks = [
+      [
+        "js/core-6.9.18.1.js",
+        text =>
+          text.includes("withSilentRequests")
+          && text.includes("recentUserActionUntil")
+          && text.includes("Procesando tu acción")
+          && text.includes("Las actualizaciones automáticas")
+      ],
+      [
+        "js/admin-6.9.18.1.js",
+        text => text.includes('from "./core-6.9.18.1.js"')
+      ],
+      [
+        "js/reseller-6.9.18.1.js",
+        text => text.includes('from "./core-6.9.18.1.js"')
+      ],
+      [
+        "admin.html",
+        text => text.includes("bootstrap-admin-6.9.18.1.js")
+      ],
+      [
+        "revendedores.html",
+        text => text.includes("bootstrap-reseller-6.9.18.1.js")
+      ]
+    ];
+
+    const results = [];
+
+    for (const [path, test] of checks) {
+      try {
+        const response = await fetch(
+          `${path}?t=${Date.now()}`,
+          { cache: "no-store" }
+        );
+        const text = await response.text();
+        results.push({ path, ok: response.ok && test(text) });
+      } catch {
+        results.push({ path, ok: false });
+      }
+    }
+
+    document.querySelector("#checks").innerHTML =
+      results.map(item => `
+        <div class="stack-row">
+          <strong>${item.path}</strong>
+          <span class="status-pill ${item.ok ? "active" : "expired"}">
+            ${item.ok ? "CORRECTO" : "FALTA"}
+          </span>
+        </div>
+      `).join("");
+  </script>
+</body>
+</html>
