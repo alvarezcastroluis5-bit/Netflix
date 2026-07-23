@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Verificar V6.9.18.2</title>
+  <link rel="stylesheet" href="./css/styles.css?v=6.9.18.3">
+</head>
+<body>
+  <main style="max-width:920px;margin:30px auto;padding:16px">
+    <article class="glass-panel">
+      <span class="eyebrow">VERIFICACIÓN</span>
+      <h1>Centro Premium V6.9.18.2</h1>
+      <p>Visor Netflix completo y cargador inteligente.</p>
+      <div id="checks">Verificando…</div>
+    </article>
+  </main>
+
+  <script type="module">
+    const checks = [
+      [
+        "css/styles.css",
+        text =>
+          text.includes("V6.9.18.2 · VISOR NETFLIX COMPLETO")
+          && text.includes("height:clamp(900px,88dvh,1080px)")
+          && text.includes("scale(.80)")
+          && text.includes("scale(.68)")
+      ],
+      [
+        "js/core-6.9.18.1.js",
+        text =>
+          text.includes("withSilentRequests")
+          && text.includes("recentUserActionUntil")
+      ],
+      [
+        "admin.html",
+        text => text.includes("styles.css?v=6.9.18.3")
+      ],
+      [
+        "revendedores.html",
+        text => text.includes("styles.css?v=6.9.18.3")
+      ]
+    ];
+
+    const results = [];
+
+    for (const [path, test] of checks) {
+      try {
+        const response = await fetch(
+          `${path}?t=${Date.now()}`,
+          { cache: "no-store" }
+        );
+        const text = await response.text();
+        results.push({ path, ok: response.ok && test(text) });
+      } catch {
+        results.push({ path, ok: false });
+      }
+    }
+
+    document.querySelector("#checks").innerHTML =
+      results.map(item => `
+        <div class="stack-row">
+          <strong>${item.path}</strong>
+          <span class="status-pill ${item.ok ? "active" : "expired"}">
+            ${item.ok ? "CORRECTO" : "FALTA"}
+          </span>
+        </div>
+      `).join("");
+  </script>
+</body>
+</html>

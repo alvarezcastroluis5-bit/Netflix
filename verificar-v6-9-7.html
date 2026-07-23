@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es" translate="no" class="notranslate">
+<head>
+  <meta charset="utf-8">
+  <meta name="google" content="notranslate">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+  <title>Verificar V6.9.7</title>
+  <link
+    rel="stylesheet"
+    href="./css/styles.css?v=6.9.18.3"
+  >
+</head>
+<body>
+  <main style="max-width:900px;margin:35px auto;padding:20px">
+    <article class="glass-panel">
+      <span class="eyebrow">DIAGNÓSTICO</span>
+      <h1>Centro Premium V6.9.7</h1>
+      <p>
+        Verifica el sonido, la marca y los archivos nuevos.
+      </p>
+
+      <button id="testSound" class="btn primary">
+        Probar sonido enviado
+      </button>
+
+      <div
+        id="checks"
+        class="stack-list"
+        style="margin-top:18px"
+      >
+        Verificando…
+      </div>
+    </article>
+  </main>
+
+  <script type="module">
+    const checks=[];
+
+    async function checkFile(path,test){
+      try{
+        const response=await fetch(
+          `${path}?diagnostic=${Date.now()}`,
+          {cache:"no-store"}
+        );
+
+        const text=await response.text();
+
+        checks.push({
+          path,
+          ok:response.ok&&test(text)
+        });
+      }catch{
+        checks.push({
+          path,
+          ok:false
+        });
+      }
+    }
+
+    await checkFile(
+      "js/core-6.9.7.js",
+      text=>
+        text.includes("startNotificationWatcher")
+        &&text.includes("notification-alert.mp3")
+    );
+
+    await checkFile(
+      "js/reseller-6.9.7.js",
+      text=>text.includes("startNotificationWatcher")
+    );
+
+    await checkFile(
+      "assets/notification-alert.mp3",
+      text=>text.length>0
+    );
+
+    document.querySelector("#checks").innerHTML=
+      checks.map(item=>`
+        <div class="stack-row">
+          <strong>${item.path}</strong>
+          <span class="status-pill ${
+            item.ok?"active":"expired"
+          }">
+            ${item.ok?"CORRECTO":"FALTA"}
+          </span>
+        </div>
+      `).join("");
+
+    document.querySelector("#testSound").onclick=async()=>{
+      const audio=new Audio(
+        `assets/notification-alert.mp3?test=${Date.now()}`
+      );
+
+      try{
+        await audio.play();
+      }catch(error){
+        alert(error.message);
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="notranslate" lang="es" translate="no"><head><meta charset="utf-8"/><meta content="notranslate" name="google"/><meta content="es" http-equiv="Content-Language"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Administración · Centro Premium</title><link href="./css/styles.css?v=6.9.18.3" id="mainStylesheet" onerror="this.onerror=null;this.href='./styles.css?v=6.9.18.3'" rel="stylesheet"/></head>
+<body class="notranslate" data-portal="staff" translate="no">
+<section class="login-screen" id="loginView"><div class="login-stage"><div class="login-showcase"><span class="eyebrow">ADMINISTRACIÓN Y SOPORTE</span><h1>Control total de tu red premium.</h1><p>Gestiona Netflix, Spotify, distribuidores, soporte y comunicaciones.</p><div class="dual-service-art"><div class="service-emblem netflix-emblem">N</div><div class="pulse-line"></div><div class="service-emblem spotify-emblem"><svg viewbox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.58 14.43a.75.75 0 0 1-1.03.25c-2.82-1.72-6.38-2.11-10.57-1.16a.75.75 0 1 1-.33-1.46c4.58-1.04 8.51-.59 11.68 1.35.35.21.46.67.25 1.02Zm1.47-3.28a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.55-11.97-1.39a.94.94 0 1 1-.55-1.79c4.37-1.33 9.8-.69 13.5 1.58.44.27.58.85.31 1.29Zm.13-3.42C14.3 7.43 7.9 7.22 4.2 8.34a1.12 1.12 0 1 1-.65-2.14c4.25-1.29 11.32-1.04 15.77 1.6a1.12 1.12 0 0 1-1.14 1.93Z"></path></svg></div></div></div><form class="login-panel" id="loginForm"><span class="eyebrow">INICIAR SESIÓN</span><h2>Acceso interno</h2><p>Ingresa con tu correo y contraseña autorizados.</p><label><span>Correo electrónico</span><input id="loginEmail" required="" type="email"/></label><label><span>Contraseña</span><input id="loginPassword" required="" type="password"/></label><label class="inline-check"><input id="rememberSession" type="checkbox"/> Mantener sesión iniciada</label><button class="btn primary block" id="loginSubmitBtn" type="submit">Ingresar</button><div class="form-error" hidden="" id="loginError"></div></form></div></section>
+<div class="app-layout" hidden="" id="appView">
+<header class="app-topbar"><button class="icon-button" id="sidebarToggle">☰</button><div class="app-identity"><span class="identity-mark" id="panelBrandMark">P</span><div><strong id="panelBrandName">Centro Premium</strong></div></div><div class="topbar-spacer"></div><button aria-label="Notificaciones pendientes" class="notification-button" id="notificationBell"><span>🔔</span><b hidden="" id="notificationBadge">0</b></button><div class="user-menu"><button class="user-menu-toggle" id="userMenuToggle"><span class="topbar-user-avatar" id="topbarUserAvatar">U</span><span><strong id="topbarUserName">Usuario</strong><small id="topbarUserRole">Administración</small></span><span class="user-menu-arrow">⌄</span></button><div class="user-menu-dropdown" hidden="" id="userMenuDropdown"><button id="userMenuLogout">Cerrar sesión</button></div></div></header>
+<aside class="app-sidebar" id="sidebar"><nav><button class="nav-link active" data-section="dashboard"><span>⌂</span><b>Escritorio</b></button><button class="nav-link" data-section="services"><span>◆</span><b>Servicios</b></button><button class="nav-link" data-section="users"><span>◇</span><b>Usuarios</b></button><button class="nav-link" data-section="accounts"><span>▣</span><b>Cuentas</b></button><button class="nav-link" data-section="tickets"><span>◉</span><b>Soporte</b><i id="ticketBadge">0</i></button><button class="nav-link" data-section="history"><span>◷</span><b>Historial</b></button><button class="nav-link" data-section="content"><span>▶</span><b>Estrenos</b></button><button class="nav-link" data-section="help"><span>?</span><b>Preguntas y uso</b></button><button class="nav-link" data-section="notifications"><span>✦</span><b>Notificaciones</b></button><button class="nav-link" data-section="panelsettings"><span>⚙</span><b>Marca y servicios</b></button></nav></aside>
+<main class="app-main">
+<section class="page-section active" id="section-dashboard">
+<div id="adminDashboardSummary">
+<div class="hero-strip"><div><span class="eyebrow">RESUMEN GENERAL</span><h1 id="dashboardGreeting">Hola</h1><p>Estado de la red, cuentas y soporte.</p></div></div>
+<div class="metric-grid">
+<article class="metric-card cyan"><span>Distribuidores activos</span><strong id="statUsers">0</strong><small>En toda la red</small></article>
+<article class="metric-card violet"><span>Cuentas registradas</span><strong id="statAccounts">0</strong><small>Netflix y Spotify</small></article>
+<article class="metric-card green"><span>Disponibles</span><strong id="statAvailable">0</strong><small>Listas para asignar</small></article>
+<article class="metric-card orange"><span>Tickets pendientes</span><strong id="statTickets">0</strong><small>Requieren atención</small></article>
+</div>
+<div class="dashboard-columns">
+<article class="glass-panel span-two"><div class="panel-heading"><div><span class="eyebrow">CUENTAS</span><h2>Actividad reciente</h2></div><button class="text-button" data-go="accounts">Ver cuentas</button></div><div class="activity-feed" id="recentAccounts"></div></article>
+<article class="glass-panel"><div class="panel-heading"><div><span class="eyebrow">SOPORTE</span><h2>Últimos tickets</h2></div></div><div class="stack-list" id="recentTickets"></div></article>
+<article class="glass-panel span-two dashboard-content-panel">
+<div class="panel-heading">
+<div><span class="eyebrow">NOVEDADES</span>
+<h2>Estrenos y recomendaciones</h2></div>
+<button class="text-button" data-go="content">Administrar</button>
+</div>
+<div class="horizontal-content" id="adminFeaturedContent"></div>
+</article></div>
+</div>
+<div hidden="" id="supportDashboardSummary">
+<div class="hero-strip support-hero"><div><span class="eyebrow">RESUMEN GENERAL</span><h1 id="supportDashboardGreeting">Centro de soporte</h1><p>Gestiona garantías, respuestas y solicitudes pendientes.</p></div><button class="btn success" data-go="tickets">Atender tickets</button></div>
+<div class="support-metric-grid">
+<article class="metric-card orange"><span>Tickets pendientes</span><strong id="supportPendingTickets">0</strong><small>Sin resolver</small></article>
+<article class="metric-card cyan"><span>En revisión</span><strong id="supportReviewTickets">0</strong><small>Actualmente atendidos</small></article>
+<article class="metric-card green"><span>Tickets resueltos</span><strong id="supportResolvedTickets">0</strong><small>Garantías y respuestas finalizadas</small></article>
+</div>
+<div class="dashboard-columns">
+<article class="glass-panel span-two"><div class="panel-heading"><div><span class="eyebrow">POR ATENDER</span><h2>Tickets pendientes</h2></div><button class="text-button support-ticket-filter" data-support-status="pending">Ver todos</button></div><div class="activity-feed" id="supportPendingList"></div></article>
+<article class="glass-panel"><div class="panel-heading"><div><span class="eyebrow">FINALIZADOS</span><h2>Resueltos recientemente</h2></div></div><div class="stack-list" id="supportResolvedList"></div></article>
+</div>
+</div>
+</section>
+<section class="page-section" id="section-services"><div class="page-header"><div><span class="eyebrow">PLATAFORMAS</span><h1>Servicios</h1><p>Servicios disponibles y próximos lanzamientos.</p></div></div><div class="service-launch-grid" id="adminServiceCatalogGrid"></div></section><section class="page-section" id="section-users">
+<div class="page-header">
+<div>
+<span class="eyebrow">CONTROL DE ACCESOS</span>
+<h1>Usuarios</h1>
+<p>Crea distribuidores y personal de soporte con permisos separados.</p>
+</div>
+<button class="btn success" id="openCreateUser">＋ Nuevo usuario</button>
+</div>
+<article class="glass-panel">
+<div class="filter-bar multi">
+<input class="search-control" id="userSearch" placeholder="Buscar por correo o nombre"/>
+<select id="userRoleFilter">
+<option value="">Todos los tipos</option>
+<option value="reseller">Distribuidores</option>
+<option value="support">Personal de soporte</option>
+</select>
+</div>
+<div class="table-scroll">
+<table class="data-table">
+<thead>
+<tr>
+<th>Jerarquía / usuario</th>
+<th>Correo</th>
+<th>Padre</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="usersTable"></tbody>
+</table>
+</div>
+</article>
+</section>
+<section class="page-section" id="section-accounts">
+<div class="page-header">
+<div>
+<span class="eyebrow">BASE CENTRAL</span>
+<h1>Cuentas de servicio</h1>
+<p>Netflix y Spotify, con regla exacta de 30 días.</p>
+</div>
+<div class="page-header-actions account-main-actions" id="adminAccountBulkActions">
+<button class="btn export-accounts-button" id="exportAdminAccounts">
+        ⇩ Exportar cuentas
+      </button>
+<button class="btn update-dates-button" id="openAdminUpdateDates">
+        ↻ Actualizar fechas
+      </button>
+<button class="btn primary" id="openCreateAccount">
+        ＋ Añadir en bloque
+      </button>
+<button class="btn danger" id="openBulkDeleteAccounts">
+        🗑 Eliminar en bloque
+      </button>
+</div>
+</div>
+<article class="glass-panel">
+<div class="filter-bar multi accounts-filter-bar">
+<input class="search-control" id="accountSearch" placeholder="Buscar correo o propietario"/>
+<select class="page-size-select compact" id="adminAccountsPageSize">
+<option value="25">25 por página</option>
+<option value="50">50 por página</option>
+<option value="100">100 por página</option>
+</select>
+<select id="accountServiceFilter">
+<option value="">Todos los servicios</option>
+<option value="netflix">Netflix</option>
+<option value="spotify">Spotify</option>
+</select>
+<select id="accountStatusFilter">
+<option value="">Todos los estados</option>
+<option value="available">Disponible</option>
+<option value="assigned">Asignada</option>
+</select>
+
+</div>
+<div class="table-scroll">
+<table class="data-table">
+<thead>
+<tr>
+<th>Servicio</th>
+<th>Correo</th>
+<th>País</th>
+<th>Tipo</th>
+<th>Propietario</th>
+<th>Fecha de corte</th>
+<th>Días restantes</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="accountsTable"></tbody>
+</table>
+</div>
+<div class="accounts-pagination-footer">
+<span class="pagination-summary" id="adminAccountsCount"></span>
+<nav class="pagination-controls" id="adminAccountsPagination"></nav>
+</div>
+</article>
+</section>
+<section class="page-section" id="section-tickets">
+<div class="page-header"><div><span class="eyebrow">CENTRO DE SOPORTE</span><h1>Tickets</h1><p>Pendientes, atendidos y resueltos de toda la red.</p></div><div class="page-header-actions support-main-actions"><button class="btn export-accounts-button" id="exportAdminTickets">⇩ Exportar tickets</button><button class="btn success" id="adminCreateTicket">＋ Crear ticket</button></div></div>
+<div class="support-ticket-tabs"><button class="support-tab active" data-ticket-view="">Todos</button><button class="support-tab" data-ticket-view="pending">Pendientes</button><button class="support-tab" data-ticket-view="resolved">Resueltos</button></div>
+<article class="glass-panel"><div class="filter-bar multi support-filter-bar">
+<input class="search-control" id="ticketSearch" placeholder="Buscar usuario, título o correo"/>
+<select id="ticketServiceFilter"><option value="">Todas las plataformas</option><option value="netflix">Netflix</option><option value="spotify">Spotify</option></select>
+
+<select class="page-size-select" id="adminTicketsPageSize"><option value="25">25 por página</option><option value="50">50 por página</option><option value="100">100 por página</option></select>
+</div><div class="table-scroll"><table class="data-table"><thead><tr><th>Distribuidor</th><th>Plataforma</th><th>Error</th><th>Categoría</th><th>Correo</th><th>Estado</th><th></th></tr></thead><tbody id="ticketsTable"></tbody></table></div><div class="accounts-pagination-footer"><span class="pagination-summary" id="adminTicketsCount"></span><nav class="pagination-controls" id="adminTicketsPagination"></nav></div></article>
+</section>
+<section class="page-section" id="section-history"><div class="page-header"><div><span class="eyebrow">TRAZABILIDAD</span><h1>Historial de cambios</h1></div></div><article class="glass-panel"><div class="table-scroll"><table class="data-table"><thead><tr><th>Servicio</th><th>Cambio</th><th>Tipo</th><th>Responsable</th><th>Fecha</th></tr></thead><tbody id="historyTable"></tbody></table></div></article></section>
+<section class="page-section" id="section-content"><div class="page-header"><div><span class="eyebrow">CONTENIDO</span><h1>Estrenos y recomendaciones</h1></div><button class="btn primary" id="openCreateContent">＋ Nueva publicación</button></div><div class="content-gallery" id="contentAdminGrid"></div></section>
+<section class="page-section" id="section-help">
+<div class="page-header"><div><span class="eyebrow">CENTRO DE AYUDA</span><h1>Preguntas frecuentes y cómo utilizar</h1><p>Publica preguntas, respuestas, tutoriales, imágenes y videos para los distribuidores.</p></div><button class="btn primary" id="openCreateHelpArticle">＋ Nuevo contenido</button></div>
+<div class="help-admin-filters"><select id="helpTypeFilter"><option value="">Preguntas y tutoriales</option><option value="faq">Preguntas frecuentes</option><option value="guide">Cómo utilizar</option></select></div>
+<div class="help-article-grid" id="helpAdminGrid"></div>
+</section>
+<section class="page-section" id="section-notifications">
+<div class="page-header">
+<div>
+<span class="eyebrow">COMUNICACIONES</span>
+<h1>Enviar avisos</h1>
+<p>Envía texto, imagen o ambos a usuarios específicos o a todo el panel.</p>
+</div>
+</div>
+<div class="notification-compose-grid">
+<article class="glass-panel">
+<form class="form-grid" id="notificationForm">
+<label class="full">
+<span>Alcance del aviso</span>
+<select id="adminNotificationScope" name="scope">
+<option value="selected">Seleccionar usuarios</option>
+<option value="all_distributors">Todos los distribuidores</option>
+<option value="all_panel">Todos los usuarios del panel</option>
+</select>
+</label>
+<label class="full">
+<span>Título</span>
+<input maxlength="120" name="title" required=""/>
+</label>
+<label class="full">
+<span>Mensaje</span>
+<textarea name="message" placeholder="Escribe el aviso. Puede quedar vacío si adjuntas una imagen." rows="7"></textarea>
+</label>
+<label class="full">
+<span>Imagen opcional</span>
+<input accept="image/png,image/jpeg,image/webp" name="image" type="file"/>
+</label>
+<label class="notification-forward-control full">
+<input name="allow_forward" type="checkbox"/>
+<span>
+            Permitir que los distribuidores destinatarios reenvíen este aviso
+            a su propia red directa.
+          </span>
+</label>
+<div class="notice-box full">
+<strong>Todos los distribuidores:</strong> incluye todos los niveles de la red.
+          <br/>
+<strong>Todo el panel:</strong> incluye distribuidores, soporte y otros administradores activos.
+        </div>
+<button class="btn primary full" type="submit">
+          Enviar aviso
+        </button>
+</form>
+</article>
+<article class="glass-panel" id="adminRecipientPanel">
+<div class="panel-heading">
+<div>
+<span class="eyebrow">DESTINATARIOS</span>
+<h2>Usuarios específicos</h2>
+</div>
+<button class="text-button" id="selectAllRecipients" type="button">
+          Seleccionar todos
+        </button>
+</div>
+<input class="search-control" id="recipientSearch" placeholder="Buscar distribuidor o soporte"/>
+<div class="recipient-list" id="recipientList"></div>
+</article>
+</div>
+</section>
+<section class="page-section" id="section-panelsettings">
+<div class="page-header">
+<div>
+<span class="eyebrow">PERSONALIZACIÓN</span>
+<h1>Marca y servicios</h1>
+<p>Cambia el nombre, el logotipo y administra las plataformas visibles.</p>
+</div>
+</div>
+<div class="settings-admin-grid">
+<article class="glass-panel">
+<div class="panel-heading"><div>
+<span class="eyebrow">MARCA</span><h2>Centro Premium</h2>
+</div></div>
+<form class="form-grid" id="panelBrandForm">
+<label class="full"><span>Nombre del panel</span>
+<input minlength="3" name="brand_name" required=""/>
+</label>
+<label class="full"><span>URL del logotipo</span>
+<input name="logo_url" placeholder="https://..." type="url"/>
+</label>
+<label class="full"><span>O subir logotipo</span>
+<input accept="image/*" name="logo_file" type="file"/>
+</label>
+<button class="btn primary full" id="savePanelBrand" type="submit">
+                  Guardar marca
+                </button>
+</form>
+</article>
+<article class="glass-panel span-two">
+<div class="panel-heading">
+<div><span class="eyebrow">SERVICIOS</span>
+<h2>Catálogo del panel</h2></div>
+<button class="btn success" id="openCreatePanelService">
+                  ＋ Añadir servicio
+                </button>
+</div>
+<div class="service-manager-grid" id="panelServiceManager"></div>
+</article>
+</div>
+</section></main></div><div id="modalRoot"></div><div class="toast-root" id="toastRoot"></div><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script type="module" src="js/bootstrap-admin-6.9.18.3.js"></script></body></html>
