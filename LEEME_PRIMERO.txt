@@ -1,0 +1,21 @@
+CENTRO PREMIUM V6.9.19 - CARPETA COMPLETA
+
+PARA GITHUB:
+1. Abra esta carpeta.
+2. Seleccione y suba a la raíz del repositorio:
+   - index.html
+   - admin.html
+   - revendedores.html
+   - styles.css
+   - carpeta css
+   - carpeta js
+   - carpeta assets
+3. Mantenga el archivo CNAME que ya existe en GitHub. No lo elimine.
+4. La carpeta sql NO se publica en GitHub Pages; úsela únicamente en Supabase.
+
+PARA SUPABASE:
+Ejecute una sola vez:
+sql/bloque_42_v6_9_19_notificaciones_servicios_sincronizacion.sql
+
+DESPUÉS:
+Espere a que GitHub Pages termine el despliegue y recargue con Ctrl + F5.
