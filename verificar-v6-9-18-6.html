@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Verificar V6.9.18.6</title>
+  <link rel="stylesheet" href="./css/styles.css?v=6.9.18.6">
+</head>
+<body>
+  <main style="max-width:940px;margin:30px auto;padding:16px">
+    <article class="glass-panel">
+      <span class="eyebrow">VERIFICACIÓN</span>
+      <h1>Centro Premium V6.9.18.6</h1>
+      <p>Permisos restaurados y validación Netflix para toda la rama subordinada.</p>
+      <div id="checks">Verificando archivos…</div>
+      <p style="margin-top:18px">La comprobación real de Supabase se obtiene al ejecutar el Bloque 38.</p>
+    </article>
+  </main>
+  <script type="module">
+    const checks=[
+      ["js/core-6.9.18.6.js",t=>
+        t.includes("un subordinado de tu rama")
+        &&t.includes("validate_netflix_owner_access_v35")
+      ],
+      ["js/admin-6.9.18.6.js",t=>t.includes('from "./core-6.9.18.6.js"')],
+      ["js/reseller-6.9.18.6.js",t=>t.includes('from "./core-6.9.18.6.js"')],
+      ["sql/bloque_38_permisos_y_netflix_jerarquico.sql",t=>
+        t.includes("panel_permissions_healthcheck_v38")
+        &&t.includes("with recursive branch")
+      ],
+      ["admin.html",t=>t.includes("bootstrap-admin-6.9.18.6.js")],
+      ["revendedores.html",t=>t.includes("bootstrap-reseller-6.9.18.6.js")]
+    ];
+    const results=[];
+    for(const [path,test] of checks){
+      try{
+        const response=await fetch(`${path}?t=${Date.now()}`,{cache:"no-store"});
+        const text=await response.text();
+        results.push({path,ok:response.ok&&test(text)});
+      }catch{results.push({path,ok:false})}
+    }
+    document.querySelector("#checks").innerHTML=results.map(item=>`
+      <div class="stack-row">
+        <strong>${item.path}</strong>
+        <span class="status-pill ${item.ok?"active":"expired"}">
+          ${item.ok?"CORRECTO":"FALTA"}
+        </span>
+      </div>
+    `).join("");
+  </script>
+</body>
+</html>
