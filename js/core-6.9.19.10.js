@@ -1,5 +1,5 @@
-console.info("Centro Premium core V6.9.19.17 cargado");
-console.info("Centro Premium Netflix V6.9.8 cargado");
+console.info("Centro Premium core V6.9.19.10 cargado");
+console.info("Centro Premium Netflix / Disney V6.9.19.10 cargado");
 const createClient = globalThis.__SUPABASE_CREATE_CLIENT__;
 
 if (typeof createClient !== "function") {
