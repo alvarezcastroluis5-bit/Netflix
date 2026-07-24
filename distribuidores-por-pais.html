@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es" translate="no" class="notranslate">
+<head>
+  <meta charset="utf-8">
+  <meta name="google" content="notranslate">
+  <meta http-equiv="Content-Language" content="es">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07101c">
+  <meta name="description" content="Consulta el distribuidor oficial de Centro Premium disponible en tu país.">
+  <title>Distribuidores por país | Centro Premium</title>
+  <link rel="stylesheet" href="./css/styles.css?v=6.9.19.19">
+</head>
+<body class="country-public-page">
+  <header class="country-public-header">
+    <a class="country-public-brand" href="./index.html" aria-label="Volver a Centro Premium">
+      <span class="country-public-brand-mark">CP</span>
+      <span><strong>Centro Premium</strong><small>Red internacional</small></span>
+    </a>
+    <a class="country-public-back" href="./index.html">Volver al inicio</a>
+  </header>
+
+  <main class="country-public-main">
+    <section class="country-public-hero">
+      <span class="eyebrow">DISTRIBUIDORES OFICIALES</span>
+      <h1>Encuentra atención en tu país</h1>
+      <p>Selecciona un país con pin para conocer al distribuidor oficial y comunicarte directamente por WhatsApp.</p>
+    </section>
+
+    <section class="country-public-panel" aria-labelledby="countryPublicMapTitle">
+      <div class="country-public-panel-heading">
+        <div>
+          <small>MAPA MUNDIAL</small>
+          <h2 id="countryPublicMapTitle">Distribuidores por país</h2>
+        </div>
+        <span id="publicCountryCount" class="country-public-count">Cargando países…</span>
+      </div>
+
+      <div class="country-public-mobile-select">
+        <label for="publicCountrySelect">Seleccionar país disponible</label>
+        <select id="publicCountrySelect" disabled>
+          <option value="">Cargando…</option>
+        </select>
+      </div>
+
+      <div class="country-public-map-stage" id="publicCountryMapStage" aria-busy="true">
+        <img src="./assets/world-map-public.svg?v=6.9.19.19" alt="Mapa mundial con todos los países">
+        <div class="country-public-pin-layer" id="publicCountryPinLayer"></div>
+        <div class="country-public-loading" id="publicCountryLoading">Cargando mapa…</div>
+      </div>
+
+      <div class="country-public-info" id="publicCountryInfo" aria-live="polite">
+        <div class="country-public-placeholder">📍 Presiona un pin para ver el distribuidor oficial de ese país.</div>
+      </div>
+    </section>
+
+    <p class="country-public-note">Los países sin pin todavía no cuentan con un distribuidor publicado.</p>
+  </main>
+
+  <script type="module" src="./js/public-country-map-6.9.19.18.js?v=6.9.19.19"></script>
+</body>
+</html>
